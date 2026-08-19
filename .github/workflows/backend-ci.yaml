@@ -1,6 +1,9 @@
 name: Backend Continuous Integration
 
 on:
+  push:
+    branches:
+      - main
   pull_request:
     branches:
       - main
@@ -63,7 +66,7 @@ jobs:
       - name: Run tests
         run: pipenv run test
 
-      build:
+  build:
     name: Build Backend
     runs-on: ubuntu-latest
 
