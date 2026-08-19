@@ -10,16 +10,18 @@ RUN apt-get update && \
     apt-get install -y \
     build-essential \
     gcc \
+    linux-libc-dev \
+    libpcre3 \
     libpcre3-dev \
     libssl-dev \
     libffi-dev \
     && rm -rf /var/lib/apt/lists/*
 
-RUN pip install --no-cache-dir pipenv
+RUN python -m pip install --upgrade pip setuptools wheel pipenv
 
 RUN mkdir -p /var/www/app && mkdir /app
 
-COPY Pipfile* /app
+COPY Pipfile Pipfile.lock /app/
 
 RUN cd /app && pipenv install --system --deploy
 
