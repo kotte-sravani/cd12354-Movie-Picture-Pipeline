@@ -1,4 +1,4 @@
-FROM public.ecr.aws/docker/library/python:3.10-slim
+FROM python:3.10-slim
 
 ENV FLASK_RUN_HOST=0.0.0.0
 
@@ -6,19 +6,17 @@ WORKDIR /app
 
 RUN apt-get update && apt-get install -y \
     build-essential \
-    python3-dev \
+    gcc \
     libpcre3-dev \
-    libssl-dev \
-    libffi-dev \
     && rm -rf /var/lib/apt/lists/*
 
-RUN pip install --no-cache-dir --upgrade pip pipenv
+RUN pip install --no-cache-dir pipenv
 
-COPY Pipfile Pipfile.lock ./
+COPY Pipfile Pipfile.lock /app/
 
 RUN pipenv install --system --deploy
 
-COPY . .
+COPY . /app
 
 RUN mkdir -p /var/www/app
 
