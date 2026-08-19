@@ -16,11 +16,9 @@ RUN apt-get update && apt-get install -y \
 
 RUN pip install --no-cache-dir pipenv
 
-RUN pip install --no-cache-dir "setuptools<70"
-
 COPY Pipfile Pipfile.lock /app/
 
-RUN pipenv sync --system
+RUN pipenv install --system --deploy
 
 COPY . /app
 
