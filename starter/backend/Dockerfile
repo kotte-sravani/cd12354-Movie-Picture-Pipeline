@@ -18,7 +18,7 @@ RUN pip install --no-cache-dir pipenv
 
 COPY Pipfile Pipfile.lock /app/
 
-RUN pipenv install --system --deploy --dev
+RUN pipenv sync --system
 
 COPY . /app
 
