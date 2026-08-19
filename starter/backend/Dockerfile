@@ -1,4 +1,4 @@
-FROM python:3.10-slim
+FROM python:3.10-slim-bookworm
 
 ENV FLASK_RUN_HOST=0.0.0.0
 
@@ -16,12 +16,10 @@ RUN apt-get update && apt-get install -y \
 
 RUN pip install --no-cache-dir pipenv
 
-COPY Pipfile Pipfile.lock /app/
+COPY Pipfile* /app/
 
-RUN cd /app && pipenv install --system --skip-lock
+RUN pipenv install --system --skip-lock
 
 COPY . /app
-
-EXPOSE 5000
 
 CMD ["uwsgi", "--http", ":5000", "--master", "--enable-threads", "-s", "/var/www/app/app.sock", "--manage-script-name", "--mount", "/=app:app"]
