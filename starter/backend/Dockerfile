@@ -7,9 +7,6 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y \
     build-essential \
     gcc \
-    linux-headers-amd64 \
-    libpcre3 \
-    libpcre3-dev \
     libssl-dev \
     libffi-dev \
     && rm -rf /var/lib/apt/lists/*
@@ -22,4 +19,6 @@ RUN pipenv install --system --skip-lock
 
 COPY . /app
 
-CMD ["uwsgi", "--http", ":5000", "--master", "--enable-threads", "--chdir", "/", "--module", "app:app"]
+EXPOSE 5000
+
+CMD ["flask", "--app", ".", "run", "--host", "0.0.0.0", "--port", "5000"]
